@@ -1,0 +1,81 @@
+<div class="container" [ngStyle]="{'height': '100%'}">
+ 
+    <mat-card [ngStyle]="{'height': '100%', 'padding':'0'}">
+      <mat-toolbar>
+        <div align="center" style="text-align: right;">
+          Products Management
+        </div>
+      </mat-toolbar>
+      <br><br>
+      <mat-card-content>
+        <form [formGroup]="productForm" (submit)="submit()">
+          <table>
+            <tr>
+              <td class="tbl1">
+                <mat-form-field class="demo-full-width">
+                  <input formControlName="Name" matTooltip="Enter Name" matInput placeholder="Name" autocomplete="off">
+                </mat-form-field>
+                <mat-error>
+                  <span *ngIf="!productForm.get('Name').value && productForm.get('Name').touched"></span>
+                </mat-error>
+              </td>
+              <td class="tbl1">
+                <mat-form-field class="demo-full-width">
+                  <input formControlName="Code" matTooltip="Enter Code" matInput placeholder="Code" autocomplete="off">
+                </mat-form-field>
+                <mat-error>
+                  <span *ngIf="!productForm.get('Code').value && productForm.get('Code').touched"></span>
+                </mat-error>
+              </td>
+              
+              <td class="tbl1">
+                <mat-form-field class="demo-full-width">
+                  <input formControlName="Price" matTooltip="Enter Price" matInput placeholder="Price" autocomplete="off">
+                </mat-form-field>
+                <mat-error>
+                  <span *ngIf="!productForm.get('Price').value && productForm.get('Price').touched"></span>
+                </mat-error>
+              </td>
+             
+            <tr>
+              <td class="content-center">
+                <button type="submit" mat-raised-button matTooltip="Submit" [disabled]="!productForm.valid">Submit</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="reset" mat-raised-button matTooltip="Reset" (click)="resetForm()">Reset</button>
+              </td>
+            </tr>
+          </table>
+          <br><br>
+          <b>Search Records :</b> &nbsp;&nbsp;
+          <mat-form-field>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Filter">
+          </mat-form-field>
+         
+          <div>
+   
+            <mat-table [dataSource]="dataSource" matSort>
+   
+              <ng-container matColumnDef="Name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name </mat-header-cell>
+                <mat-cell *matCellDef="let product"> {{product.name}} </mat-cell>
+              </ng-container>
+   
+              <ng-container matColumnDef="Code">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
+                <mat-cell *matCellDef="let product"> {{product.code}} </mat-cell>
+              </ng-container>
+   
+              <ng-container matColumnDef="Price">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+                <mat-cell *matCellDef="let product"> {{product.price}}</mat-cell>
+              </ng-container>
+   
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+   
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
